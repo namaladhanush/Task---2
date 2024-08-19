@@ -1,65 +1,64 @@
 org 100h
-
-num1 dw 0123h
-num2 dw 0456h
-
+num1 dw 234h
+num2 dw 478h
 
 start:
-    mov ax, num1
-    add ax, num2
-    
-    mov bl, ah
-    and bl, 0F0h
-    shr bl, 4
-    add bl, 30h
-    cmp bl, 39h
-    jle print_first_digit_high
-    add bl, 7
+     mov ax, num1
+     add ax, num2
+     
+     mov bx, ax
+     mov ah, bh
+     and ah, 0F0h
+     shr ah, 4
+     add ah, 30h
+     cmp ah, 39h
+     jle print_first_digit
+     add ah, 7
+     
+print_first_digit:
+       mov dl, ah
+       mov ah, 02h
+       int 21h
+       
+      mov ah, bh
+      and ah, 0Fh
+      add ah, 30h
+      cmp ah, 39h
+      jle print_second_digit
+      add ah, 7
+      
+print_second_digit:
+       mov dl, ah
+       mov ah, 02h
+       int 21h
+                   
+     mov ah, bl
+     and ah, 0F0h
+     shr ah, 4
+     add ah, 30h
+     cmp ah, 39h
+     jle print_third_digit
+     add ah, 7
+     
+print_third_digit:
+       mov dl, ah
+       mov ah, 02h
+       int 21h
+       
+      mov ah, bl
+      and ah, 0Fh
+      add ah, 30h
+      cmp ah, 39h
+      jle print_fourth_digit
+      add ah, 7
+      
+print_fourth_digit:
+       mov dl, ah
+       mov ah, 02h
+       int 21h
+                   
+       mov ah, 4Ch
+       int 21h
 
-print_first_digit_high:
-    mov dl, bl
-    mov ah, 02h
-    int 21h
-    
-    mov bl, ah
-    and bl, 0Fh
-    add bl, 30h
-    cmp bl, 39h
-    jle print_second_digit_high
-    add bl, 7
-
-print_second_digit_high:
-    mov dl, bl
-    mov ah, 02h
-    int 21h
-
-    mov bl, al
-    and bl, 0F0h
-    shr bl, 4
-    add bl, 30h
-    cmp bl, 39h
-    jle print_first_digit_low
-    add bl, 7
-
-print_first_digit_low:
-    mov dl, bl
-    mov ah, 02h
-    int 21h
-    
-    mov bl, al
-    and bl, 0Fh
-    add bl, 30h
-    cmp bl, 39h
-    jle print_second_digit_low
-    add bl, 7
-
-print_second_digit_low:
-    mov dl, bl
-    mov ah, 02h
-    int 21h
-    
-    mov ah, 4Ch
-    int 21h
-    
 ret
-
+ret
